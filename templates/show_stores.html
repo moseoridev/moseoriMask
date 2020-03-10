@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>현황 | moseoriMask</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        div {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>마스크 목록</h1>
+    <ol>
+        {% for f in i['stores'] %}
+        <div>
+            <li>
+                <h2>{{f['name']}}</h2>
+                <ul>
+                    <li>주소: {{f['addr']}}</li>
+                    {% if f['remain_stat'] == 'plenty' %}
+                    <li><span style="background-color: green;">재고: 충분함</span></li>
+                    {% elif f['remain_stat'] == 'some' %}
+                    <li><span style="background-color: yellow;">재고: 보통</span></li>
+                    {% elif f['remain_stat'] == 'few' %}
+                    <li><span style="background-color: red;">재고: 부족</span></li>
+                    {% elif f['remain_stat'] == 'empty' %}
+                    <li><span style="background-color: gray;">재고: 품절</span></li>
+                    {% endif %}
+                    <li>입고 시각: {{f['stock_at']}}</li>
+                    <li>갱신 시각: {{f['created_at']}}</li>
+                    <li>위치: <a href="https://map.kakao.com/link/map/{{f['name']}},{{f['lat']}},{{f['lng']}}">카카오맵
+                            바로가기</a></li>
+                </ul>
+            </li>
+        </div>
+        <br />
+        {% endfor %}
+    </ol>
+</body>
+
+</html>

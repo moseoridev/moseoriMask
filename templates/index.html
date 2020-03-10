@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검색 | moseoriMask</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #status {
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>moseoriMask</h1>
+    <h2>반경 3km 이내의 마스크 정보를 보여줍니다.</h2>
+
+    <form action="/show" method="post" id="ms">
+        <input type="text" name="status" id="status" placeholder="우측 버튼을 눌러주세요" readonly>
+        <input type="button" id="location" value="위치 찾기..">
+    </form>
+
+    <p>#힘내라_대한민국<br />Made with &lt3 by <a href="https://github.com/moseoridev/">moseoridev</a></p>
+
+    <script>
+        function geoFindMe() {
+
+            const status = document.querySelector('#status');
+
+            function success(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                const ms = document.querySelector('#ms');
+
+                status.value = `${latitude}, ${longitude}`;
+                ms.submit();
+            }
+
+            function error() {
+                status.value = '오류 발생. 권한을 허용해주세요.';
+            }
+
+            if (!navigator.geolocation) {
+                status.textContent = '다른 브라우저로 시도해주세요.';
+            } else {
+                status.value = '위치 찾는 중..';
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+
+        }
+
+        document.querySelector('#location').addEventListener('click', geoFindMe);
+    </script>
+</body>
+
+</html>
